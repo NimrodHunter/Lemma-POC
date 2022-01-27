@@ -1,2 +1,1 @@
-import "./daoshares";
-import "./daotoken";
+import "./vesting";
