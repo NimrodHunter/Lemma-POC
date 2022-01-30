@@ -13,10 +13,6 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
-      name: "VestingWallet",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.VestingWallet__factory>;
-    getContractFactory(
       name: "ERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC20__factory>;
@@ -29,19 +25,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC20__factory>;
     getContractFactory(
-      name: "VestedToken",
+      name: "FakeUSDC",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.VestedToken__factory>;
+    ): Promise<Contracts.FakeUSDC__factory>;
     getContractFactory(
-      name: "Vesting",
+      name: "USDLFactory",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.Vesting__factory>;
+    ): Promise<Contracts.USDLFactory__factory>;
 
-    getContractAt(
-      name: "VestingWallet",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.VestingWallet>;
     getContractAt(
       name: "ERC20",
       address: string,
@@ -58,15 +49,15 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC20>;
     getContractAt(
-      name: "VestedToken",
+      name: "FakeUSDC",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.VestedToken>;
+    ): Promise<Contracts.FakeUSDC>;
     getContractAt(
-      name: "Vesting",
+      name: "USDLFactory",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.Vesting>;
+    ): Promise<Contracts.USDLFactory>;
 
     // default types
     getContractFactory(

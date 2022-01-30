@@ -17,8 +17,8 @@ import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
 import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
-export interface VestedTokenInterface extends utils.Interface {
-  contractName: "VestedToken";
+export interface FakeUSDCInterface extends utils.Interface {
+  contractName: "FakeUSDC";
   functions: {
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
@@ -113,13 +113,13 @@ export type TransferEvent = TypedEvent<
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface VestedToken extends BaseContract {
-  contractName: "VestedToken";
+export interface FakeUSDC extends BaseContract {
+  contractName: "FakeUSDC";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: VestedTokenInterface;
+  interface: FakeUSDCInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
