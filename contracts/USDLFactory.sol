@@ -37,14 +37,13 @@ contract USDLFactory is ERC20, ReentrancyGuard {
 
     function mint() public payable virtual nonReentrant returns (bool) {
         require(msg.value > 0, "you must send something");
-        emit Messages(msg.data, msg.sig);
         _mint(msg.sender, _ethValue() * msg.value);
         require(_safeTransferEth(msg.value), "send eth fails");
         emit VaultTransferred(msg.sender, address(0), msg.value);
         return true;
     }
 
-    function fund() public payable virtual nonReentrant returns (bool) {
+    function fund() public payable virtual returns (bool) {
         require(msg.value > 0, "you must send something");
         emit EtherFund(msg.sender, msg.value);
         return true;
@@ -55,13 +54,9 @@ contract USDLFactory is ERC20, ReentrancyGuard {
     }
 
     fallback() external payable {
-        if (bytes4(keccak256("mint()")) == bytes4(msg.data)) {
-            mint();
-        } else {
-            fund();
-        }
+        fund();
     }
-
+    
     function _transferFrom(uint256 amount) internal virtual returns (bool) {
         require(amount > 0, "you must send something");
         require(IERC20(USDC_ADDRESS).transferFrom(msg.sender, address(this), amount), "transfer from can't be done");

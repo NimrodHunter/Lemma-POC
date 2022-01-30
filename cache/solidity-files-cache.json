@@ -1,10 +1,10 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "D:\\Documentos\\Programming\\Staking\\Lemma\\contracts\\FakeUSDC.sol": {
-      "lastModificationDate": 1643502029819,
-      "contentHash": "79331e28469cba1bdb8eca825868ef8c",
-      "sourceName": "contracts/FakeUSDC.sol",
+    "D:\\Documentos\\Programming\\Staking\\Lemma\\contracts\\BasisTradingVault.sol": {
+      "lastModificationDate": 1643545686981,
+      "contentHash": "a9a413de4bcbca6e8f54cfaab821b73c",
+      "sourceName": "contracts/BasisTradingVault.sol",
       "solcConfig": {
         "version": "0.8.9",
         "settings": {
@@ -38,7 +38,7 @@
         ">=0.8.4"
       ],
       "artifacts": [
-        "FakeUSDC"
+        "BasisTradingVault"
       ]
     },
     "D:\\Documentos\\Programming\\Staking\\Lemma\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol": {
@@ -200,8 +200,8 @@
       ]
     },
     "D:\\Documentos\\Programming\\Staking\\Lemma\\contracts\\USDLFactory.sol": {
-      "lastModificationDate": 1643511135089,
-      "contentHash": "be6a71fc2f8cf70cf4c3885e832d320e",
+      "lastModificationDate": 1643545186648,
+      "contentHash": "b117cf6cfed4f233ad3924b8faad35ee",
       "sourceName": "contracts/USDLFactory.sol",
       "solcConfig": {
         "version": "0.8.9",
@@ -357,6 +357,46 @@
       ],
       "artifacts": [
         "Address"
+      ]
+    },
+    "D:\\Documentos\\Programming\\Staking\\Lemma\\contracts\\FakeUSDC.sol": {
+      "lastModificationDate": 1643524723106,
+      "contentHash": "5c013515e82f074f8b523663808cb8bb",
+      "sourceName": "contracts/FakeUSDC.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "metadata": {
+            "bytecodeHash": "none"
+          },
+          "optimizer": {
+            "enabled": true,
+            "runs": 800
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
+      "versionPragmas": [
+        ">=0.8.4"
+      ],
+      "artifacts": [
+        "FakeUSDC"
       ]
     }
   }

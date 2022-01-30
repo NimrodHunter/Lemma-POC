@@ -2,10 +2,10 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { increaseTime } from "../utils/utils";
 
-export function shouldBehaveLikeUSDLFactory(): void {
+export function shouldBehaveLikeBasisTradingVault(): void {
 
     it("Successful Approve Transfer Fake USDC", async function () {
-
+/*
         let owner = this.signers.admin;
         let ownerAddress = await owner.getAddress();
 
@@ -71,6 +71,7 @@ export function shouldBehaveLikeUSDLFactory(): void {
         })).to.emit(this.factory, "EtherFund").withArgs(ownerAddress, fundedAmount);
         let contractBalance = await ethers.provider.getBalance(this.factory.address);
         expect(contractBalance).to.equal(fundedAmount);
+        */
     });
 
 }
