@@ -30,7 +30,7 @@ describe("Unit tests", function () {
       ]);
 
       const basisTradingVaultArtifact: Artifact = await artifacts.readArtifact("BasisTradingVault");
-      this.basisTradingVault= <BasisTradingVault>await waffle.deployContract(this.signers.admin, basisTradingVaultArtifact, []);
+      this.basisTradingVault= <BasisTradingVault>await waffle.deployContract(this.signers.admin, basisTradingVaultArtifact, [this.factory.address]);
 
     });
 

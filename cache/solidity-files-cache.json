@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "D:\\Documentos\\Programming\\Staking\\Lemma\\contracts\\BasisTradingVault.sol": {
-      "lastModificationDate": 1643545686981,
-      "contentHash": "a9a413de4bcbca6e8f54cfaab821b73c",
+      "lastModificationDate": 1643548767707,
+      "contentHash": "6496a532cda2e96b711e72097cef703c",
       "sourceName": "contracts/BasisTradingVault.sol",
       "solcConfig": {
         "version": "0.8.9",
@@ -32,7 +32,8 @@
         }
       },
       "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "./USDLFactory.sol"
       ],
       "versionPragmas": [
         ">=0.8.4"
@@ -81,6 +82,49 @@
       ],
       "artifacts": [
         "ERC20"
+      ]
+    },
+    "D:\\Documentos\\Programming\\Staking\\Lemma\\contracts\\USDLFactory.sol": {
+      "lastModificationDate": 1643574933744,
+      "contentHash": "f74128435626a92ef44865a1520422c6",
+      "sourceName": "contracts/USDLFactory.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "metadata": {
+            "bytecodeHash": "none"
+          },
+          "optimizer": {
+            "enabled": true,
+            "runs": 800
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
+        "@openzeppelin/contracts/security/ReentrancyGuard.sol"
+      ],
+      "versionPragmas": [
+        ">=0.8.4"
+      ],
+      "artifacts": [
+        "USDLFactory"
       ]
     },
     "D:\\Documentos\\Programming\\Staking\\Lemma\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol": {
@@ -197,49 +241,6 @@
       ],
       "artifacts": [
         "Context"
-      ]
-    },
-    "D:\\Documentos\\Programming\\Staking\\Lemma\\contracts\\USDLFactory.sol": {
-      "lastModificationDate": 1643545186648,
-      "contentHash": "b117cf6cfed4f233ad3924b8faad35ee",
-      "sourceName": "contracts/USDLFactory.sol",
-      "solcConfig": {
-        "version": "0.8.9",
-        "settings": {
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "optimizer": {
-            "enabled": true,
-            "runs": 800
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
-        "@openzeppelin/contracts/security/ReentrancyGuard.sol"
-      ],
-      "versionPragmas": [
-        ">=0.8.4"
-      ],
-      "artifacts": [
-        "USDLFactory"
       ]
     },
     "D:\\Documentos\\Programming\\Staking\\Lemma\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\utils\\SafeERC20.sol": {
