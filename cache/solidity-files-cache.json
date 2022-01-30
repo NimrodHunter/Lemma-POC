@@ -200,8 +200,8 @@
       ]
     },
     "D:\\Documentos\\Programming\\Staking\\Lemma\\contracts\\USDLFactory.sol": {
-      "lastModificationDate": 1643502086982,
-      "contentHash": "9a017a80404edc01283e42446b175b22",
+      "lastModificationDate": 1643511135089,
+      "contentHash": "be6a71fc2f8cf70cf4c3885e832d320e",
       "sourceName": "contracts/USDLFactory.sol",
       "solcConfig": {
         "version": "0.8.9",

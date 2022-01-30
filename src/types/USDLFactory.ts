@@ -26,8 +26,9 @@ export interface USDLFactoryInterface extends utils.Interface {
     "balanceOf(address)": FunctionFragment;
     "decimals()": FunctionFragment;
     "decreaseAllowance(address,uint256)": FunctionFragment;
+    "fund()": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
-    "mint(uint256)": FunctionFragment;
+    "mint()": FunctionFragment;
     "name()": FunctionFragment;
     "symbol()": FunctionFragment;
     "totalSupply()": FunctionFragment;
@@ -49,11 +50,12 @@ export interface USDLFactoryInterface extends utils.Interface {
     functionFragment: "decreaseAllowance",
     values: [string, BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "fund", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "increaseAllowance",
     values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "mint", values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: "mint", values?: undefined): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
@@ -77,6 +79,7 @@ export interface USDLFactoryInterface extends utils.Interface {
     functionFragment: "decreaseAllowance",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "fund", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "increaseAllowance",
     data: BytesLike
@@ -96,13 +99,17 @@ export interface USDLFactoryInterface extends utils.Interface {
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
+    "EtherFund(address,uint256)": EventFragment;
+    "Messages(bytes,bytes4)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
-    "VaultTransfered(address,address,uint256)": EventFragment;
+    "VaultTransferred(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EtherFund"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Messages"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "VaultTransfered"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "VaultTransferred"): EventFragment;
 }
 
 export type ApprovalEvent = TypedEvent<
@@ -112,6 +119,20 @@ export type ApprovalEvent = TypedEvent<
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
+export type EtherFundEvent = TypedEvent<
+  [string, BigNumber],
+  { from: string; amount: BigNumber }
+>;
+
+export type EtherFundEventFilter = TypedEventFilter<EtherFundEvent>;
+
+export type MessagesEvent = TypedEvent<
+  [string, string],
+  { data: string; sig: string }
+>;
+
+export type MessagesEventFilter = TypedEventFilter<MessagesEvent>;
+
 export type TransferEvent = TypedEvent<
   [string, string, BigNumber],
   { from: string; to: string; value: BigNumber }
@@ -119,12 +140,13 @@ export type TransferEvent = TypedEvent<
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export type VaultTransferedEvent = TypedEvent<
+export type VaultTransferredEvent = TypedEvent<
   [string, string, BigNumber],
   { origin: string; token: string; amount: BigNumber }
 >;
 
-export type VaultTransferedEventFilter = TypedEventFilter<VaultTransferedEvent>;
+export type VaultTransferredEventFilter =
+  TypedEventFilter<VaultTransferredEvent>;
 
 export interface USDLFactory extends BaseContract {
   contractName: "USDLFactory";
@@ -176,15 +198,23 @@ export interface USDLFactory extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    fund(
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    mint(
-      amount: BigNumberish,
+    "mint()"(
       overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "mint(uint256)"(
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
@@ -229,15 +259,23 @@ export interface USDLFactory extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  fund(
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   increaseAllowance(
     spender: string,
     addedValue: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  mint(
-    amount: BigNumberish,
+  "mint()"(
     overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "mint(uint256)"(
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
@@ -282,13 +320,20 @@ export interface USDLFactory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    fund(overrides?: CallOverrides): Promise<boolean>;
+
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    mint(amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    "mint()"(overrides?: CallOverrides): Promise<boolean>;
+
+    "mint(uint256)"(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -322,6 +367,21 @@ export interface USDLFactory extends BaseContract {
       value?: null
     ): ApprovalEventFilter;
 
+    "EtherFund(address,uint256)"(
+      from?: string | null,
+      amount?: null
+    ): EtherFundEventFilter;
+    EtherFund(from?: string | null, amount?: null): EtherFundEventFilter;
+
+    "Messages(bytes,bytes4)"(
+      data?: BytesLike | null,
+      sig?: BytesLike | null
+    ): MessagesEventFilter;
+    Messages(
+      data?: BytesLike | null,
+      sig?: BytesLike | null
+    ): MessagesEventFilter;
+
     "Transfer(address,address,uint256)"(
       from?: string | null,
       to?: string | null,
@@ -333,16 +393,16 @@ export interface USDLFactory extends BaseContract {
       value?: null
     ): TransferEventFilter;
 
-    "VaultTransfered(address,address,uint256)"(
+    "VaultTransferred(address,address,uint256)"(
       origin?: string | null,
       token?: string | null,
       amount?: BigNumberish | null
-    ): VaultTransferedEventFilter;
-    VaultTransfered(
+    ): VaultTransferredEventFilter;
+    VaultTransferred(
       origin?: string | null,
       token?: string | null,
       amount?: BigNumberish | null
-    ): VaultTransferedEventFilter;
+    ): VaultTransferredEventFilter;
   };
 
   estimateGas: {
@@ -368,15 +428,23 @@ export interface USDLFactory extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    fund(
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    mint(
-      amount: BigNumberish,
+    "mint()"(
       overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "mint(uint256)"(
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
@@ -425,15 +493,23 @@ export interface USDLFactory extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    fund(
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    mint(
-      amount: BigNumberish,
+    "mint()"(
       overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "mint(uint256)"(
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;

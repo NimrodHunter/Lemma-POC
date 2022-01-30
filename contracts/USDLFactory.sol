@@ -13,7 +13,9 @@ contract USDLFactory is ERC20, ReentrancyGuard {
     address private USDC_ADDRESS;
     address private FUND_MANAGER;
 
-    event VaultTransfered (address indexed origin, address indexed token, uint256 indexed amount);
+    event VaultTransferred(address indexed origin, address indexed token, uint256 indexed amount);
+    event EtherFund(address indexed from, uint256 amount);
+    event Messages(bytes indexed data, bytes4 indexed sig);
 
     constructor(address usdcAddress_, address manager_)
         ERC20("Lemma USD", "USDL")
@@ -25,18 +27,39 @@ contract USDLFactory is ERC20, ReentrancyGuard {
 
     }
 
-    function mint(uint256 amount) external payable virtual nonReentrant returns (bool) {
-        if (msg.value > 0) {
-            _mint(msg.sender, _ethValue() * amount);
-            require(_safeTransferEth(msg.value), "send eth fails");
-            emit VaultTransfered(msg.sender, address(0), amount);
-        } else {
-            require(_transferFrom(amount));
-            _mint(msg.sender, _usdcValue() * amount);
-            require(_safeTransferToken(USDC_ADDRESS, amount), "send token fails");
-            emit VaultTransfered(msg.sender, USDC_ADDRESS, amount);
-        }
+    function mint(uint256 amount) external virtual nonReentrant returns (bool) {
+        require(_transferFrom(amount));
+        _mint(msg.sender, _usdcValue() * amount);
+        require(_safeTransferToken(USDC_ADDRESS, amount), "send token fails");
+        emit VaultTransferred(msg.sender, USDC_ADDRESS, amount);
         return true;
+    }
+
+    function mint() public payable virtual nonReentrant returns (bool) {
+        require(msg.value > 0, "you must send something");
+        emit Messages(msg.data, msg.sig);
+        _mint(msg.sender, _ethValue() * msg.value);
+        require(_safeTransferEth(msg.value), "send eth fails");
+        emit VaultTransferred(msg.sender, address(0), msg.value);
+        return true;
+    }
+
+    function fund() public payable virtual nonReentrant returns (bool) {
+        require(msg.value > 0, "you must send something");
+        emit EtherFund(msg.sender, msg.value);
+        return true;
+    }
+
+    receive() external payable {
+        fund();
+    }
+
+    fallback() external payable {
+        if (bytes4(keccak256("mint()")) == bytes4(msg.data)) {
+            mint();
+        } else {
+            fund();
+        }
     }
 
     function _transferFrom(uint256 amount) internal virtual returns (bool) {
@@ -63,8 +86,5 @@ contract USDLFactory is ERC20, ReentrancyGuard {
         return 2500;
     }
 
-
-
-    //mint()
 }
 

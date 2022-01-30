@@ -8,8 +8,8 @@ Lemma is a decentralized finance (DeFi) protocol with two products: a "leveraged
 
 ## Regards
 
-- No Governance or Ownership on the contracts.
-- No Comments of the functions.
-- No Fully tested.
+- No governance or ownership on the contracts.
+- No comments at contarcts.
+- No fully tested.
 - No full security regars.
 - Just a POC

@@ -26,7 +26,7 @@ export function shouldBehaveLikeUSDLFactory(): void {
         let approveTx = await this.fakeUSDC.connect(owner).approve(this.factory.address, this.maxUint256);
         await approveTx.wait();
 
-        let mintTx = await this.factory.connect(owner).mint(mintedAmount);
+        let mintTx = await this.factory.connect(owner)["mint(uint256)"](mintedAmount);
         await mintTx.wait();
 
         //console.log(mintedTx.events?.filter((x) => {return x.event == "VaultTransfered"}));
@@ -36,51 +36,38 @@ export function shouldBehaveLikeUSDLFactory(): void {
         expect(ownerUSDLBalance.toNumber()).to.equal(mintedAmount);
     });
 
-    it("Successful Second Token Release after 180 seconds", async function () {
+    it("Successful Mint with Ether and get USDL", async function () {
         let owner = this.signers.admin;
+        let ownerAddress = await owner.getAddress();
+        let mintedAmount = ethers.utils.parseUnits("2.0", "ether");
+        let etherValue = 2500;
 
-        let transferTx = await this.vestedToken.connect(owner).transfer(this.vesting.address, 600);
-        await transferTx.wait();
+        let mintTx = await this.factory.connect(owner)["mint()"]({ value: mintedAmount });
+        let mintedTx = await mintTx.wait();
 
-        await increaseTime(10);
+        //let a  = mintedTx.events?.filter((x) => {return x.event == "Messages"});
+        //a = mintedTx.events?.filter((x) => {return x.event == "Messages"});
+        //let a  = ethers.utils.AbiCoder(this.factory.mint);
 
-        let releaseTx = await this.vesting.connect(owner)["release(address)"](this.vestedToken.address);
-        await releaseTx.wait();
-
-        let contractBalance = await this.vestedToken.connect(owner).balanceOf(this.vesting.address);
-        expect(contractBalance.toNumber()).to.be.a('number');
-        expect(contractBalance.toNumber()).to.equal(540);
-
-        await increaseTime(190);
-
-        releaseTx = await this.vesting.connect(owner)["release(address)"](this.vestedToken.address);
-        await releaseTx.wait();
-        expect(contractBalance.toNumber()).to.be.a('number');        
+        let ownerUSDLBalance = await this.factory.connect(owner).balanceOf(ownerAddress);
+        expect(ownerUSDLBalance).to.equal(mintedAmount.mul(etherValue));     
         
     });
-
-/* 
-    it("Revert if the release is before 180 seconds", async function () {
+ /*
+    it("Successful Fund with", async function () {
         let owner = this.signers.admin;
+        let ownerAddress = await owner.getAddress();
+        let fundedAmount = ethers.utils.parseUnits("3.0", "ether");
 
-        let transferTx = await this.vestedToken.connect(owner).transfer(this.vesting.address, 600);
-        await transferTx.wait();
+        //expect(await this.factory.connect(owner)["fund()"]({ value: fundedAmount })).to.emit(this.factory, "EtherFund").withArgs(ownerAddress, fundedAmount)
+        //await fundTx.wait();
+        await this.factory.connect(owner)["fund()"]({ value: fundedAmount });
+        //console.log(mintedTx.events?.filter((x) => {return x.event == "VaultTransfered"}));
 
-        await increaseTime(10);
-
-        let releaseTx = await this.vesting.connect(owner)["release(address)"](this.vestedToken.address);
-        await releaseTx.wait();
-
-        let contractBalance = await this.vestedToken.connect(owner).balanceOf(this.vesting.address);
-        expect(contractBalance.toNumber()).to.be.a('number');
-        expect(contractBalance.toNumber()).to.equal(540);
-
-        await increaseTime(30);
-
-        await expect(this.vesting.connect(owner)["release(address)"](this.vestedToken.address)).to.be.revertedWith("already vested")     
-        
+        //let ownerUSDLBalance = await this.factory.connect(owner).balanceOf(ownerAddress);
+        //console.log(ownerUSDLBalance)
+        //expect(ownerUSDLBalance).to.equal(mintedAmount.mul(etherValue)); 
     });
-
-
 */
+
 }
