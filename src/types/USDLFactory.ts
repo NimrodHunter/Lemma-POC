@@ -22,6 +22,7 @@ export interface USDLFactoryInterface extends utils.Interface {
   contractName: "USDLFactory";
   functions: {
     "allowance(address,address)": FunctionFragment;
+    "allowedToken(address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "decimals()": FunctionFragment;
@@ -42,6 +43,10 @@ export interface USDLFactoryInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "allowance",
     values: [string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "allowedToken",
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "approve",
@@ -87,6 +92,10 @@ export interface USDLFactoryInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "allowedToken",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
@@ -123,15 +132,15 @@ export interface USDLFactoryInterface extends utils.Interface {
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
+    "Deposited(address,address,uint256)": EventFragment;
     "EtherFund(address,uint256)": EventFragment;
-    "Minted(address,address,uint256)": EventFragment;
     "Redeemed(address,address,uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Deposited"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EtherFund"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Minted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Redeemed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
@@ -143,19 +152,19 @@ export type ApprovalEvent = TypedEvent<
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
+export type DepositedEvent = TypedEvent<
+  [string, string, BigNumber],
+  { sender: string; token: string; amount: BigNumber }
+>;
+
+export type DepositedEventFilter = TypedEventFilter<DepositedEvent>;
+
 export type EtherFundEvent = TypedEvent<
   [string, BigNumber],
   { from: string; amount: BigNumber }
 >;
 
 export type EtherFundEventFilter = TypedEventFilter<EtherFundEvent>;
-
-export type MintedEvent = TypedEvent<
-  [string, string, BigNumber],
-  { sender: string; token: string; amount: BigNumber }
->;
-
-export type MintedEventFilter = TypedEventFilter<MintedEvent>;
 
 export type RedeemedEvent = TypedEvent<
   [string, string, BigNumber],
@@ -204,6 +213,8 @@ export interface USDLFactory extends BaseContract {
       spender: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
+
+    allowedToken(token: string, overrides?: CallOverrides): Promise<[boolean]>;
 
     approve(
       spender: string,
@@ -285,6 +296,8 @@ export interface USDLFactory extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  allowedToken(token: string, overrides?: CallOverrides): Promise<boolean>;
+
   approve(
     spender: string,
     amount: BigNumberish,
@@ -364,6 +377,8 @@ export interface USDLFactory extends BaseContract {
       spender: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    allowedToken(token: string, overrides?: CallOverrides): Promise<boolean>;
 
     approve(
       spender: string,
@@ -447,22 +462,22 @@ export interface USDLFactory extends BaseContract {
       value?: null
     ): ApprovalEventFilter;
 
+    "Deposited(address,address,uint256)"(
+      sender?: string | null,
+      token?: string | null,
+      amount?: BigNumberish | null
+    ): DepositedEventFilter;
+    Deposited(
+      sender?: string | null,
+      token?: string | null,
+      amount?: BigNumberish | null
+    ): DepositedEventFilter;
+
     "EtherFund(address,uint256)"(
       from?: string | null,
       amount?: null
     ): EtherFundEventFilter;
     EtherFund(from?: string | null, amount?: null): EtherFundEventFilter;
-
-    "Minted(address,address,uint256)"(
-      sender?: string | null,
-      token?: string | null,
-      amount?: BigNumberish | null
-    ): MintedEventFilter;
-    Minted(
-      sender?: string | null,
-      token?: string | null,
-      amount?: BigNumberish | null
-    ): MintedEventFilter;
 
     "Redeemed(address,address,uint256)"(
       sender?: string | null,
@@ -493,6 +508,8 @@ export interface USDLFactory extends BaseContract {
       spender: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    allowedToken(token: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
       spender: string,
@@ -572,6 +589,11 @@ export interface USDLFactory extends BaseContract {
     allowance(
       owner: string,
       spender: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    allowedToken(
+      token: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

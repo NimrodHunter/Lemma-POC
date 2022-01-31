@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "D:\\Documentos\\Programming\\Staking\\Lemma\\contracts\\BasisTradingVault.sol": {
-      "lastModificationDate": 1643548767707,
-      "contentHash": "6496a532cda2e96b711e72097cef703c",
+      "lastModificationDate": 1643594123664,
+      "contentHash": "102dde5fabdf7f0e9b938f4a215a64ec",
       "sourceName": "contracts/BasisTradingVault.sol",
       "solcConfig": {
         "version": "0.8.9",
@@ -33,6 +33,9 @@
       },
       "imports": [
         "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
+        "@openzeppelin/contracts/security/ReentrancyGuard.sol",
         "./USDLFactory.sol"
       ],
       "versionPragmas": [
@@ -85,8 +88,8 @@
       ]
     },
     "D:\\Documentos\\Programming\\Staking\\Lemma\\contracts\\USDLFactory.sol": {
-      "lastModificationDate": 1643574933744,
-      "contentHash": "f74128435626a92ef44865a1520422c6",
+      "lastModificationDate": 1643594163546,
+      "contentHash": "55fd185b4a97955e495e3159be7e2ed1",
       "sourceName": "contracts/USDLFactory.sol",
       "solcConfig": {
         "version": "0.8.9",

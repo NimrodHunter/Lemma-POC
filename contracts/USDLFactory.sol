@@ -15,7 +15,7 @@ contract USDLFactory is ERC20, ReentrancyGuard {
 
     mapping(address => bool) tokenAllowed;
 
-    event Minted(address indexed sender, address indexed token, uint256 indexed amount);
+    event Deposited(address indexed sender, address indexed token, uint256 indexed amount);
     event EtherFund(address indexed from, uint256 amount);
     event Redeemed(address indexed sender, address indexed token, uint256 indexed amount);
 
@@ -32,11 +32,11 @@ contract USDLFactory is ERC20, ReentrancyGuard {
     }
 
     function mint(address token, uint256 amount) external virtual nonReentrant returns (bool) {
-        require(tokenAllowed[token], "token not allowed");
+        require(allowedToken(token), "token not allowed");
         require(_transferFrom(msg.sender, token, amount), "transfer from fails");
         _mint(msg.sender, mintedAmount(token, amount));
         require(_safeTransferToken(token, FUND_MANAGER, amount), "send token fails");
-        emit Minted(msg.sender, token, amount);
+        emit Deposited(msg.sender, token, amount);
         return true;
     }
 
@@ -44,7 +44,7 @@ contract USDLFactory is ERC20, ReentrancyGuard {
         require(msg.value > 0, "you must send some eth");
         _mint(msg.sender, mintedAmount(address(0), msg.value));
         require(_safeTransferEth(msg.value), "send eth fails");
-        emit Minted(msg.sender, address(0), msg.value);
+        emit Deposited(msg.sender, address(0), msg.value);
         return true;
     }
 
@@ -55,7 +55,7 @@ contract USDLFactory is ERC20, ReentrancyGuard {
     }
 
     function redeem(address token, uint256 amount) external virtual returns (bool) {
-        require(tokenAllowed[token], "token not allowed");
+        require(allowedToken(token), "token not allowed");
         require(amount > 0, "you must send something");
         require(IERC20(address(this)).balanceOf(msg.sender) > 0, "must have enough tokens");
         uint256 _reedemAmount = reedemAmount(token, amount);
@@ -80,11 +80,15 @@ contract USDLFactory is ERC20, ReentrancyGuard {
     }
 
     function mintedAmount(address token, uint256 amount) public virtual view returns(uint256) {
-        return _tokenPrice(token) * amount;
+        return (_tokenPrice(token) * amount) / _tokenPrice(address(this));
     }
 
     function reedemAmount(address token, uint256 amount) public virtual view returns (uint256) {
         return (_tokenPrice(address(this)) * amount) / _tokenPrice(token);
+    }
+
+    function allowedToken(address token) public virtual view returns (bool) {
+        return tokenAllowed[token];
     }
     
     function _transferFrom(address from, address token, uint256 amount) internal virtual returns (bool) {
