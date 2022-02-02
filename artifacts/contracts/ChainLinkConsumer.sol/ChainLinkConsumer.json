@@ -1,0 +1,16 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "ChainLinkConsumer",
+  "sourceName": "contracts/ChainLinkConsumer.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    }
+  ],
+  "bytecode": "0x6080604052348015600f57600080fd5b50600060208190527fad3228b676f7d3cd4284a5443f17f1962b36e491b30a40b2405849e597ba5fb580546001600160a01b0319908116738fffffd4afb6115b954bd326cbe7b4ba576818f61790915560019091527fada5013122d395ba3c54772283fb069b10426056ef8ca54750cb9bb552a59e7d8054909116735f4ec3df9cbd43714fe2740f5e3616155c5b841917905560168060af6000396000f3fe6080604052600080fdfea164736f6c6343000809000a",
+  "deployedBytecode": "0x6080604052600080fdfea164736f6c6343000809000a",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

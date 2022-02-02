@@ -13,6 +13,10 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
+      name: "AggregatorV3Interface",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.AggregatorV3Interface__factory>;
+    getContractFactory(
       name: "ERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC20__factory>;
@@ -29,6 +33,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.BasisTradingVault__factory>;
     getContractFactory(
+      name: "ChainLinkConsumer",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ChainLinkConsumer__factory>;
+    getContractFactory(
       name: "FakeUSDC",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.FakeUSDC__factory>;
@@ -37,6 +45,11 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.USDLFactory__factory>;
 
+    getContractAt(
+      name: "AggregatorV3Interface",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.AggregatorV3Interface>;
     getContractAt(
       name: "ERC20",
       address: string,
@@ -57,6 +70,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.BasisTradingVault>;
+    getContractAt(
+      name: "ChainLinkConsumer",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ChainLinkConsumer>;
     getContractAt(
       name: "FakeUSDC",
       address: string,

@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "D:\\Documentos\\Programming\\Staking\\Lemma\\contracts\\BasisTradingVault.sol": {
-      "lastModificationDate": 1643594123664,
-      "contentHash": "102dde5fabdf7f0e9b938f4a215a64ec",
+      "lastModificationDate": 1643594372324,
+      "contentHash": "99f9daaebb42bbe979963015b335d8d4",
       "sourceName": "contracts/BasisTradingVault.sol",
       "solcConfig": {
         "version": "0.8.9",
@@ -87,49 +87,6 @@
         "ERC20"
       ]
     },
-    "D:\\Documentos\\Programming\\Staking\\Lemma\\contracts\\USDLFactory.sol": {
-      "lastModificationDate": 1643594163546,
-      "contentHash": "55fd185b4a97955e495e3159be7e2ed1",
-      "sourceName": "contracts/USDLFactory.sol",
-      "solcConfig": {
-        "version": "0.8.9",
-        "settings": {
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "optimizer": {
-            "enabled": true,
-            "runs": 800
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
-        "@openzeppelin/contracts/security/ReentrancyGuard.sol"
-      ],
-      "versionPragmas": [
-        ">=0.8.4"
-      ],
-      "artifacts": [
-        "USDLFactory"
-      ]
-    },
     "D:\\Documentos\\Programming\\Staking\\Lemma\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol": {
       "lastModificationDate": 1643471925760,
       "contentHash": "302d9755e46bc69d7058b0cbe7185e37",
@@ -166,84 +123,6 @@
       ],
       "artifacts": [
         "IERC20"
-      ]
-    },
-    "D:\\Documentos\\Programming\\Staking\\Lemma\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\IERC20Metadata.sol": {
-      "lastModificationDate": 1643471925784,
-      "contentHash": "909ab67fc5c25033fe6cd364f8c056f9",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
-      "solcConfig": {
-        "version": "0.8.9",
-        "settings": {
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "optimizer": {
-            "enabled": true,
-            "runs": 800
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../IERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC20Metadata"
-      ]
-    },
-    "D:\\Documentos\\Programming\\Staking\\Lemma\\node_modules\\@openzeppelin\\contracts\\utils\\Context.sol": {
-      "lastModificationDate": 1643471924862,
-      "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
-      "sourceName": "@openzeppelin/contracts/utils/Context.sol",
-      "solcConfig": {
-        "version": "0.8.9",
-        "settings": {
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "optimizer": {
-            "enabled": true,
-            "runs": 800
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "Context"
       ]
     },
     "D:\\Documentos\\Programming\\Staking\\Lemma\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\utils\\SafeERC20.sol": {
@@ -325,6 +204,128 @@
         "ReentrancyGuard"
       ]
     },
+    "D:\\Documentos\\Programming\\Staking\\Lemma\\contracts\\USDLFactory.sol": {
+      "lastModificationDate": 1643839504543,
+      "contentHash": "5aeeceb9f5973b851de63b8ede7cf7a3",
+      "sourceName": "contracts/USDLFactory.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "metadata": {
+            "bytecodeHash": "none"
+          },
+          "optimizer": {
+            "enabled": true,
+            "runs": 800
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
+        "@openzeppelin/contracts/security/ReentrancyGuard.sol",
+        "./ChainLinkConsumer.sol"
+      ],
+      "versionPragmas": [
+        ">=0.8.4"
+      ],
+      "artifacts": [
+        "USDLFactory"
+      ]
+    },
+    "D:\\Documentos\\Programming\\Staking\\Lemma\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\IERC20Metadata.sol": {
+      "lastModificationDate": 1643471925784,
+      "contentHash": "909ab67fc5c25033fe6cd364f8c056f9",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "metadata": {
+            "bytecodeHash": "none"
+          },
+          "optimizer": {
+            "enabled": true,
+            "runs": 800
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC20Metadata"
+      ]
+    },
+    "D:\\Documentos\\Programming\\Staking\\Lemma\\node_modules\\@openzeppelin\\contracts\\utils\\Context.sol": {
+      "lastModificationDate": 1643471924862,
+      "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
+      "sourceName": "@openzeppelin/contracts/utils/Context.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "metadata": {
+            "bytecodeHash": "none"
+          },
+          "optimizer": {
+            "enabled": true,
+            "runs": 800
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Context"
+      ]
+    },
     "D:\\Documentos\\Programming\\Staking\\Lemma\\node_modules\\@openzeppelin\\contracts\\utils\\Address.sol": {
       "lastModificationDate": 1643471924779,
       "contentHash": "4cff8b2ea0d958750786b4e3ca308445",
@@ -401,6 +402,84 @@
       ],
       "artifacts": [
         "FakeUSDC"
+      ]
+    },
+    "D:\\Documentos\\Programming\\Staking\\Lemma\\contracts\\ChainLinkConsumer.sol": {
+      "lastModificationDate": 1643839359991,
+      "contentHash": "f3ef8907ef3a7df9c1a9a4c776b147f8",
+      "sourceName": "contracts/ChainLinkConsumer.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "metadata": {
+            "bytecodeHash": "none"
+          },
+          "optimizer": {
+            "enabled": true,
+            "runs": 800
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol"
+      ],
+      "versionPragmas": [
+        ">=0.8.4"
+      ],
+      "artifacts": [
+        "ChainLinkConsumer"
+      ]
+    },
+    "D:\\Documentos\\Programming\\Staking\\Lemma\\node_modules\\@chainlink\\contracts\\src\\v0.8\\interfaces\\AggregatorV3Interface.sol": {
+      "lastModificationDate": 1643837725854,
+      "contentHash": "611f626b2447ccff9ba5332460fd217f",
+      "sourceName": "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "metadata": {
+            "bytecodeHash": "none"
+          },
+          "optimizer": {
+            "enabled": true,
+            "runs": 800
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "AggregatorV3Interface"
       ]
     }
   }

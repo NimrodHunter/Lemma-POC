@@ -5,37 +5,38 @@ import { increaseTime } from "../utils/utils";
 export function shouldBehaveLikeBasisTradingVault(): void {
 
     it("Successful Approve Transfer Fake USDC", async function () {
-/*
+
         let owner = this.signers.admin;
         let ownerAddress = await owner.getAddress();
 
-        let approveTx = await this.fakeUSDC.connect(owner).approve(this.factory.address, this.maxUint256);
+        let approveTx = await this.fakeUSDC.connect(owner).approve(this.basisTradingVault.address, this.maxUint256);
         await approveTx.wait();
 
-        let allowedAmount = await this.fakeUSDC.connect(owner).allowance(ownerAddress, this.factory.address);
+        let allowedAmount = await this.fakeUSDC.connect(owner).allowance(ownerAddress, this.basisTradingVault.address);
         expect(allowedAmount).to.equal(this.maxUint256);
     
     
     });
- 
-    it("Successful Transfer Fake USDC and get USDL", async function () {
+
+    it("Successful Deposit Fake USDC and get xUSDL", async function () {
         let owner = this.signers.admin;
         let ownerAddress = await owner.getAddress();
-        let mintedAmount = 1000;
+        let depositAmount = 1000;
 
-        let approveTx = await this.fakeUSDC.connect(owner).approve(this.factory.address, this.maxUint256);
+        let approveTx = await this.fakeUSDC.connect(owner).approve(this.basisTradingVault.address, this.maxUint256);
         await approveTx.wait();
 
-        let mintTx = await this.factory.connect(owner)["mint(uint256)"](mintedAmount);
-        await mintTx.wait();
+        let depositTx = await this.basisTradingVault.connect(owner).deposit(this.fakeUSDC.address, depositAmount)
+        await depositTx.wait();
 
-        //console.log(mintedTx.events?.filter((x) => {return x.event == "VaultTransfered"}));
+        //console.log(mintedTx.events?.filter((x) => {return x.event == "Vaulteposited"}));
 
-        let ownerUSDLBalance = await this.factory.connect(owner).balanceOf(ownerAddress);
-        expect(ownerUSDLBalance.toNumber()).to.be.a('number');
-        expect(ownerUSDLBalance.toNumber()).to.equal(mintedAmount);
+        let ownerxUSDLBalance = await this.basisTradingVault.connect(owner).balanceOf(ownerAddress);
+        let mintedAmount = await this.basisTradingVault.connect(owner). mintedAmount(this.fakeUSDC.address, depositAmount);
+        expect(ownerxUSDLBalance.toNumber()).to.be.a('number');
+        expect(ownerxUSDLBalance.toNumber()).to.equal(mintedAmount);
     });
-
+ /*
     it("Successful Mint with Ether and get USDL", async function () {
         let owner = this.signers.admin;
         let ownerAddress = await owner.getAddress();
@@ -71,7 +72,7 @@ export function shouldBehaveLikeBasisTradingVault(): void {
         })).to.emit(this.factory, "EtherFund").withArgs(ownerAddress, fundedAmount);
         let contractBalance = await ethers.provider.getBalance(this.factory.address);
         expect(contractBalance).to.equal(fundedAmount);
-        */
+        
     });
-
+*/
 }

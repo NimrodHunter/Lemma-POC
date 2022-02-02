@@ -5,9 +5,10 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "./ChainLinkConsumer.sol";
 
 //solhint-disable-line
-contract USDLFactory is ERC20, ReentrancyGuard {
+contract USDLFactory is ERC20, ChainLinkConsumer, ReentrancyGuard {
 
     //uint256 private immutable MAX_UINT = type(uint256).max;
     address private USDC_ADDRESS;
@@ -20,7 +21,7 @@ contract USDLFactory is ERC20, ReentrancyGuard {
     event Redeemed(address indexed sender, address indexed token, uint256 indexed amount);
 
     constructor(address usdcAddress_, address manager_)
-        ERC20("Lemma USD", "USDL")
+        ERC20("Lemma USD", "USDL") ChainLinkConsumer()
     {
         require(usdcAddress_ != address(0), "USDC address should not be 0");
         require(manager_ != address(0), "Manager address should not be 0");
@@ -110,9 +111,9 @@ contract USDLFactory is ERC20, ReentrancyGuard {
         return true;
     }
 
-    function _tokenPrice(address token) internal virtual pure returns (uint256) {
-       if (token != address(0)) return 1;
-       else return 2500;
+    function _tokenPrice(address token) internal virtual view returns (uint256) {
+       if (token != address(0)) return uint256(getLatestPrice(1));
+       else return uint256(getLatestPrice(0));
     }
 
 }
