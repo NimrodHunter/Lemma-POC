@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.4;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "./ChainLinkConsumer.sol";
 
 //solhint-disable-line
@@ -32,11 +32,12 @@ contract USDLFactory is ERC20, ChainLinkConsumer, ReentrancyGuard {
 
     }
 
-    function mint(address token, uint256 amount) external virtual nonReentrant returns (bool) {
+    function mint(address token, uint256 amount) public virtual nonReentrant returns (bool) {
+        require(amount > 0, "you must send something");
+        require(token != address(0), "token address should not be 0");
         require(allowedToken(token), "token not allowed");
         require(_transferFrom(msg.sender, token, amount), "transfer from fails");
         _mint(msg.sender, mintedAmount(token, amount));
-        require(_safeTransferToken(token, FUND_MANAGER, amount), "send token fails");
         emit Deposited(msg.sender, token, amount);
         return true;
     }
@@ -55,7 +56,7 @@ contract USDLFactory is ERC20, ChainLinkConsumer, ReentrancyGuard {
         return true;
     }
 
-    function redeem(address token, uint256 amount) external virtual returns (bool) {
+    function redeem(address token, uint256 amount) public virtual nonReentrant returns (bool) {
         require(allowedToken(token), "token not allowed");
         require(amount > 0, "you must send something");
         require(IERC20(address(this)).balanceOf(msg.sender) > 0, "must have enough tokens");
@@ -73,11 +74,11 @@ contract USDLFactory is ERC20, ChainLinkConsumer, ReentrancyGuard {
     }
 
     receive() external payable {
-        fund();
+        mint();
     }
 
     fallback() external payable {
-        fund();
+        mint();
     }
 
     function mintedAmount(address token, uint256 amount) public virtual view returns(uint256) {
@@ -93,8 +94,7 @@ contract USDLFactory is ERC20, ChainLinkConsumer, ReentrancyGuard {
     }
     
     function _transferFrom(address from, address token, uint256 amount) internal virtual returns (bool) {
-        require(amount > 0, "you must send something");
-        SafeERC20.safeTransferFrom(IERC20(token), from, address(this), amount);
+        SafeERC20.safeTransferFrom(IERC20(token), from, FUND_MANAGER, amount);
         return true;
     }
 
